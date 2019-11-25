@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Weather
+	</title>
+</head>
+<body>
+	<input type="text" name="name1" id="myin">
+   <button id="btn">Fetch it</button>
+   <div id="info" style="text-align:center;"></div>
+   <script type="text/javascript">
+   	
+   	   document.getElementById("btn").onclick = async() =>
+   	   {
+   	   	let p = document.getElementById("myin").value;
+   	   	 var data = await fetch(`http://dataservice.accuweather.com/locations/v1/cities/search?q=${p}&apikey=zOeHP2bTm8oEcOEWTP9JvS8aZw2bBG8Q`);
+   	   	 var data1 = await data.json();
+   	   	 var n = data1[0].Key
+   	   	 var d1 = await fetch("http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/"+n+"?apikey=zOeHP2bTm8oEcOEWTP9JvS8aZw2bBG8Q");
+   	   	 var d2 = await d1.json();
+   	   	 console.log(d2[0].IconPhrase);
+   	   	 // var m1 = await fetch("https://serpapi.com/playground?engine=google&q="+data1[0].EnglishName+"&tbm=isch",{ mode: 'no-cors'})
+   	     // var m2 = await m1.json();
+   	     // console.log(m2);
+   	   document.getElementById("info").innerHTML=`
+
+   	    <h1> Details Of the searched City</h1><br>
+   	    <h2> ${data1[0].EnglishName} </h2>
+   	    <p> 1. Weather detail : ${d2[0].IconPhrase} </p><br>
+   	    <p> 2. Temp : ${d2[0].Temperature.Value} </p>&nbsp&nbsp
+   	    <p> 3. Unit : ${d2[0].Temperature.Unit} </p>
+   	   `
+   	}
+   </script>
+</body>
+</html>
