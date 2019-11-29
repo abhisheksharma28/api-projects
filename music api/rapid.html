@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music info</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
+    <style type="text/css">
+      #xx
+      {
+          margin-bottom: 20px;
+          border: 1px solid black;
+          padding: 2px;
+          background-color: gray;
+      }
+      #gg
+      {
+         font-family: 'Comfortaa', cursive;
+         font-size: 35px;
+         margin-bottom: 15px;
+      }
+      #g11
+      {
+          text-decoration: none;
+          font-size: 25px;
+         
+      }
+      #bb
+      {
+         margin-bottom: 50px;
+      }
+    </style>
+</head>
+<body>
+		<div style="background: url('bg1.jpg'); background-position: center;background-repeat: no-repeat;height: 100%;width: 100%;background-size: 100%;padding: 100px;">
+	          <h1 style="padding: 100px; font-size: 50px;text-align:center;font-family: Lobster;color: #737373;">Search Your Favourite Lyrics</h1>
+				<center><input class="form-control col-lg-6" type="text" id="search" name="value" style="margin-top: 10px;">
+				<button class="btn btn-primary col-lg-3" style="margin-top: 100px;" onclick="f1()">Search</button>
+				<h1 id="h" style="margin-top: 100px;font-family:'Dosis', sans-serif "></h1></center>		
+		</div>
+    <div id="dd">
+      <div id="div1" style="margin-left: 25%;margin-top: 150px;"></div>
+    </div>
+    
+<script>
+function f1()
+{
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange=function() {
+	 var h1 = document.getElementById("h");
+	 h1.innerHTML = "Search Results for"+"'"+c+"'";
+
+    if (this.readyState == 4 && this.status == 200)
+     {
+     	var a = JSON.parse(this.responseText);
+      console.log(a);
+      // var q = document.getElementById("dd");
+      // q.setAttribute("background", "black");
+     	var b = document.getElementById("div1");
+       for(var i=0;i<a.response.hits.length;i++)
+       {
+	     	var x=document.createElement("IMG");
+        x.setAttribute("id","xx");
+	     	x.setAttribute("height","20%");
+	     	x.setAttribute("width","20%");
+	     	x.setAttribute("src",a.response.hits[i].result.song_art_image_url);
+        var g = document.createElement("h4");
+        g.setAttribute("id","gg");
+        g.innerHTML = a.response.hits[i].result.full_title;
+        var g1 = document.createElement("h4");
+        g1.setAttribute("id","g11");
+        g1.innerHTML = "Get Your lyrics here";
+        var g2 = document.createElement("a");
+        g2.setAttribute("id","bb");
+        g2.setAttribute("href",a.response.hits[i].result.url);
+        g2.setAttribute("class","btn btn-danger");
+        g2.innerHTML = "get here";
+	     	b.appendChild(g);
+        b.appendChild(x);
+        b.appendChild(g1);
+        b.appendChild(g2);
+       }
+     }
+  };
+        var c = document.getElementById("search").value; 
+        xhttp.open("GET", "https://genius.p.rapidapi.com/search?q="+c);
+		xhttp.setRequestHeader("x-rapidapi-host","genius.p.rapidapi.com");
+		xhttp.setRequestHeader("x-rapidapi-key","d6861bff7emsh0baf517e0d5af32p1d7c7bjsn38fd457126e1");
+		xhttp.send();
+}
+</script>
+</body>
+</html>
